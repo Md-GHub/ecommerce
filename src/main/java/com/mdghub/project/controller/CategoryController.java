@@ -2,6 +2,7 @@ package com.mdghub.project.controller;
 
 import com.mdghub.project.model.Category;
 import com.mdghub.project.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class CategoryController {
     }
 
     @PostMapping("/admin/categories")
-    public ResponseEntity<String> addCategories(@RequestBody Category category) {
+    public ResponseEntity<String> addCategories(@Valid @RequestBody Category category) {
         categoryService.addCategory(category);
         return ResponseEntity.ok("Category added successfully");
     }
