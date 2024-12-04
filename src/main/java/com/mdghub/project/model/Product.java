@@ -2,6 +2,8 @@ package com.mdghub.project.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Product {
     @Id
@@ -17,6 +19,12 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne
+    @JoinTable(
+            name = "seller_id"
+    )
+    private Users user;
 
     public Product() {
     }
