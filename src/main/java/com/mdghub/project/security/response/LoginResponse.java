@@ -1,4 +1,4 @@
-package com.mdghub.project.security.jwt;
+package com.mdghub.project.security.response;
 
 
 import java.util.List;

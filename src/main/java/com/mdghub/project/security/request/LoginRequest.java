@@ -1,4 +1,4 @@
-package com.mdghub.project.security.jwt;
+package com.mdghub.project.security.request;
 
 public class LoginRequest {
     private String username;

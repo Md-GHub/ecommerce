@@ -42,7 +42,6 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/auth/**").permitAll() // it will ignore the login,register api
-                                .requestMatchers("/v3/api-docs/**").permitAll() // it will ignore api documentation
                                 .requestMatchers("/api/admin/**").permitAll() // for development only
                                 .requestMatchers("/api/public/**").permitAll() // can be accessed public
 //                                .requestMatchers("/swagger-ui/**").permitAll()
@@ -66,7 +65,7 @@ public class WebSecurityConfig {
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setUserDetailsService(userDetailsService); // custom
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;

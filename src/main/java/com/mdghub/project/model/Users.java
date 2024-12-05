@@ -66,7 +66,7 @@ public class Users {
 
 
     public Users( String phone, String email,
-                 String lastName, String firstName, String password, String userName) {
+                 String firstName,String lastName, String password, String userName) {
         //this.address = address;
         this.phone = phone;
         this.email = email;
