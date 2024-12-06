@@ -40,7 +40,7 @@ public class Users {
     private String phone;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-    fetch = FetchType.EAGER)
+    fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(referencedColumnName = "userId"),
@@ -51,7 +51,7 @@ public class Users {
     @OneToMany(mappedBy = "user",
             orphanRemoval = true,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     private Set<Product> product;
     public Users() {
     }

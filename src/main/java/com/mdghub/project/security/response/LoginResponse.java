@@ -15,6 +15,11 @@ public class LoginResponse {
         this.jwtToken = jwtToken;
     }
 
+    public LoginResponse(List<String> roles, String username) {
+        this.roles = roles;
+        this.username = username;
+    }
+
     public String getJwtToken() {
         return jwtToken;
     }

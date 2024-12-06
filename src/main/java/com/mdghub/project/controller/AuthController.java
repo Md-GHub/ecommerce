@@ -10,9 +10,12 @@ import com.mdghub.project.security.request.LoginRequest;
 import com.mdghub.project.security.response.LoginResponse;
 import com.mdghub.project.security.request.SignupRequest;
 import com.mdghub.project.security.response.MessageResponse;
+import com.mdghub.project.security.service.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,20 +69,22 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication); // authentication object holder
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal(); // Userobject , username as principle
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal(); // Userobject , username as principle
 
-        String jwtToken = jwtUtil.generateTokenFromUsername(userDetails); // generating jwt token
+        ResponseCookie jwtToken = jwtUtil.generateJwtCookie(userDetails); // generating jwt token and set it to cookie response
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        LoginResponse response = new LoginResponse(jwtToken, roles ,userDetails.getUsername());
+        LoginResponse response = new LoginResponse(roles ,userDetails.getUsername());
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE,jwtToken.toString())
+                .body(response); // set the cookie first and send the response object to the client
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/signup") //registering user
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         //validation of user
         if (userRepository.existsByUserName((signUpRequest.getUsername()))){
@@ -128,5 +134,24 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully! now you can login"));
+    }
+
+    @PostMapping("/signout") //logout
+    public ResponseEntity<MessageResponse> logoutUser() {
+        ResponseCookie jwtToken = jwtUtil.getCleanCookie();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE,jwtToken.toString())
+                .body(new MessageResponse("You have been logged out successfully!"));
+    }
+
+    //can be used to display username for styling purpose : (need to be fixed !)
+    @GetMapping(value = "/username")
+    public String getUsername(Authentication authentication) {
+        System.out.println("HI");
+        if(authentication!=null){
+            return "harrish_classic";
+        }
+        return "null";
     }
 }
