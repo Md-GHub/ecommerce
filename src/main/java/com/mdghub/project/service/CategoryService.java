@@ -9,6 +9,6 @@ import java.util.List;
 public interface CategoryService {
     public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize , String sortBy , String sortOrder);
     public CategoryDTO addCategory(CategoryDTO categoryDTO);
-    public CategoryDTO deleteCategory(Long id);
+    public CategoryDTO deleteCategoryByCategoryId(Long id);
     public CategoryDTO updateCategory(CategoryDTO categoryDTO, Long id);
 }

@@ -1,44 +1,27 @@
-package com.mdghub.project.model;
+package com.mdghub.project.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+public class AddressDTO {
 
-@Entity
-public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long addressId;
-    @NotBlank
-    @Size(min = 4, message = "Street name must be atleast 4")
     private String street;
-    @NotBlank
-    @Size(min = 4, message = "building name must be atleast 4")
     private String buildingName;
-    @NotBlank
-    @Size(min = 4, message = "city name must be atleast 4")
     private String city;
-    @NotBlank
-    @Size(min = 4, message = "state name must be atleast 4")
     private String state;
-    @NotBlank
-    @Size(min = 4, message = "country name must be atleast 4")
     private String country;
-    @NotBlank
-    @Size(min = 6, message = "pincode name must be atleast 6")
     private String pincode;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users user;
+    public AddressDTO() {
+    }
 
-
-    public Address(String street, String buildingName, String city,
-                   String state, String country, String pincode) {
+    public AddressDTO(Long addressId, String street, String buildingName,
+                      String city, String state, String country, String pincode) {
+        this.addressId = addressId;
         this.street = street;
         this.buildingName = buildingName;
         this.city = city;
@@ -46,9 +29,15 @@ public class Address {
         this.country = country;
         this.pincode = pincode;
     }
-
-    public Address() {
-
+    public AddressDTO(String street, String buildingName,
+                      String city, String state, String country, String pincode) {
+        this.addressId = addressId;
+        this.street = street;
+        this.buildingName = buildingName;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.pincode = pincode;
     }
 
     public Long getAddressId() {
@@ -105,13 +94,5 @@ public class Address {
 
     public void setPincode(String pincode) {
         this.pincode = pincode;
-    }
-
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
     }
 }

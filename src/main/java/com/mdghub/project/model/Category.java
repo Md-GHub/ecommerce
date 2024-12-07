@@ -1,11 +1,10 @@
 package com.mdghub.project.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 
 @Entity(name = "categories")
 public class Category {
@@ -13,13 +12,15 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
     @NotBlank
-    @Size(min = 7,message = "Category name should be atleast 7 characters")
+    @Size(min = 3)
     private String categoryName;
     public Category() {}
     public Category(Long categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
     }
+    @OneToMany(mappedBy = "category",orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Product> products;
     public Long getCategoryId() {
         return categoryId;
     }

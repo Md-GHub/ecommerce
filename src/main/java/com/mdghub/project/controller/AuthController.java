@@ -11,6 +11,7 @@ import com.mdghub.project.security.response.LoginResponse;
 import com.mdghub.project.security.request.SignupRequest;
 import com.mdghub.project.security.response.MessageResponse;
 import com.mdghub.project.security.service.UserDetailsImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +23,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -136,22 +136,22 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully! now you can login"));
     }
 
-    @PostMapping("/signout") //logout
-    public ResponseEntity<MessageResponse> logoutUser() {
-        ResponseCookie jwtToken = jwtUtil.getCleanCookie();
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE,jwtToken.toString())
-                .body(new MessageResponse("You have been logged out successfully!"));
+    @PostMapping("/signout")
+    public ResponseEntity<?> signoutUser(){
+        ResponseCookie cookie = jwtUtil.getCleanCookie();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
+                        cookie.toString())
+                .body(new MessageResponse("You've been signed out!"));
     }
 
     //can be used to display username for styling purpose : (need to be fixed !)
     @GetMapping(value = "/username")
-    public String getUsername(Authentication authentication) {
+    public ResponseEntity<String> getUsername(Authentication authentication) {
         System.out.println("HI");
         if(authentication!=null){
-            return "harrish_classic";
+            System.out.println(authentication.getName());
+            return ResponseEntity.ok(authentication.getName());
         }
-        return "null";
+        return ResponseEntity.badRequest().body("Authentication Failed");
     }
 }

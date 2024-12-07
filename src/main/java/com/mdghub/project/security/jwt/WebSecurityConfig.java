@@ -35,19 +35,24 @@ public class WebSecurityConfig {
 
 
 
-    @Bean //roadmap for security!!!
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll() // it will ignore the login,register api
-                                .requestMatchers("/api/admin/**").permitAll() // for development only
-                                .requestMatchers("/api/public/**").permitAll() // can be accessed public
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/api/test/**").permitAll()
-                                .requestMatchers("/images/**").permitAll() // used to see the product image
-                                .anyRequest().authenticated() // other request must need to be authendicated
+                .authorizeHttpRequests(auth -> auth
+                        // Permit Swagger UI and OpenAPI endpoints
+                        .requestMatchers(
+                                "/api/auth/**",
+                                "/api/public/**",
+                                "/images/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs.yaml"
+                        ).permitAll()
+                        .requestMatchers("/api/admin/**").hasAnyAuthority("ADMIN")
+                        .anyRequest().authenticated() // other requests must be authenticated
                 );
 
         http.authenticationProvider(authenticationProvider());
@@ -56,6 +61,7 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
@@ -92,7 +98,7 @@ public class WebSecurityConfig {
                 "/configuration/ui",
                 "/swagger-resources/**",
                 "/configuration/security",
-                "/swagger-ui.html",
+                "/swagger-ui/**",
                 "/webjars/**"));
     }
 

@@ -56,12 +56,12 @@ public class Users {
     public Users() {
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            fetch = FetchType.EAGER)
-    @JoinTable(
-            joinColumns = @JoinColumn(referencedColumnName = "userId"),
-            inverseJoinColumns = @JoinColumn(referencedColumnName = "addressId")
-    )
+    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY,orphanRemoval = true)
+//    @JoinTable(
+//            joinColumns = @JoinColumn(referencedColumnName = "userId"),
+//            inverseJoinColumns = @JoinColumn(referencedColumnName = "addressId")
+//    )
     private List<Address> address = new ArrayList<>();
 
 

@@ -2,6 +2,7 @@ package com.mdghub.project.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,6 +26,18 @@ public class Product {
             name = "seller_id"
     )
     private Users user;
+
+    @OneToMany(mappedBy = "product",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.EAGER)
+    private List<CartItems> products;
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
 
     public Product() {
     }

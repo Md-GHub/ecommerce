@@ -77,7 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
     //delete category by id :
     @Transactional
     @Override
-    public CategoryDTO deleteCategory(Long id) {
+    public CategoryDTO deleteCategoryByCategoryId(Long id) {
         Optional<Category> categories = categoryRepo.findById(id);
         Category category = categories
                 .orElseThrow(() ->
