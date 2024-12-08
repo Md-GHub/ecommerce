@@ -2,15 +2,13 @@ package com.mdghub.project.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 public class CartItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItemId;
 
-    private Integer quantity;
+    private Long quantity;
     private Double discount;
     private Double productPrice;
 
@@ -24,7 +22,7 @@ public class CartItems {
 
     public CartItems() {}
 
-    public CartItems(Integer quantity, Double discount, Double productPrice, Cart cart, Product product) {
+    public CartItems(Long quantity, Double discount, Double productPrice, Cart cart, Product product) {
         this.quantity = quantity;
         this.discount = discount;
         this.productPrice = productPrice;
@@ -32,11 +30,11 @@ public class CartItems {
         this.product = product;
     }
 
-    public Integer getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

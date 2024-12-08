@@ -17,7 +17,7 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "phone")
         }
 )
-public class Users {
+public class Users{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;

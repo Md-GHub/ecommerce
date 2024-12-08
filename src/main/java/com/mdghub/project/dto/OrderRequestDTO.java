@@ -1,0 +1,68 @@
+package com.mdghub.project.dto;
+
+
+
+public class OrderRequestDTO {
+    private Long addressId;
+    private String paymentMethod;
+    private String pgName;
+    private String pgPaymentId;
+    private String pgStatus;
+    private String pgResponseMessage;
+
+    public OrderRequestDTO(String paymentMethod, String pgName, String pgPaymentId, String pgStatus, String pgResponseMessage) {
+        this.paymentMethod = paymentMethod;
+        this.pgName = pgName;
+        this.pgPaymentId = pgPaymentId;
+        this.pgStatus = pgStatus;
+        this.pgResponseMessage = pgResponseMessage;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
+    }
+
+    public String getPgResponseMessage() {
+        return pgResponseMessage;
+    }
+
+    public void setPgResponseMessage(String pgResponseMessage) {
+        this.pgResponseMessage = pgResponseMessage;
+    }
+
+    public String getPgStatus() {
+        return pgStatus;
+    }
+
+    public void setPgStatus(String pgStatus) {
+        this.pgStatus = pgStatus;
+    }
+
+    public String getPgPaymentId() {
+        return pgPaymentId;
+    }
+
+    public void setPgPaymentId(String pgPaymentId) {
+        this.pgPaymentId = pgPaymentId;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPgName() {
+        return pgName;
+    }
+
+    public void setPgName(String pgName) {
+        this.pgName = pgName;
+    }
+}

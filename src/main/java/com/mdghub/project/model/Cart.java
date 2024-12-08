@@ -3,6 +3,7 @@ package com.mdghub.project.model;
 
 import jakarta.persistence.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -59,4 +60,6 @@ public class Cart {
     public void setProducts(List<CartItems> products) {
         this.products = products;
     }
+
+
 }

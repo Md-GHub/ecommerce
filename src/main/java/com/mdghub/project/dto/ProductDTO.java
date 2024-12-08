@@ -4,7 +4,7 @@ public class ProductDTO {
     private Long productId;
     private String productName;
     private String image;
-    private Integer quantity;
+    private Long quantity;
     private Double price;
     private Double discount;
     private Double specialPrice;
@@ -12,7 +12,7 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
-    public ProductDTO(Long productId, String productName, String image, Integer quantity,
+    public ProductDTO(Long productId, String productName, String image, Long quantity,
                       Double price, Double discount, Double specialPrice) {
         this.productId = productId;
         this.productName = productName;
@@ -47,11 +47,11 @@ public class ProductDTO {
         this.image = image;
     }
 
-    public Integer getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 
